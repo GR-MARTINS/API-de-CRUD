@@ -1,8 +1,8 @@
 [default]
 DEBUG = false
 EXTENSIONS = [
-    "app.api.db:init_app",
-    "app.api.migrate:init_app"
+    "api.db:init_app",
+    "api.model.migrate:init_app"
 ]
 
 [development]
@@ -10,8 +10,8 @@ DEBUG = true
 SQLALCHEMY_DATABASE_URI = 'sqlite:///database.db'
 SQLALCHEMY_TRACK_MODIFICATIONS = false
 EXTENSIONS = [
-    "app.api.db:init_app",
-    "app.api.migrate:init_app"
+    "api.db:init_app",
+    "api.model.migrate:init_app"
 ]
 
 [production]

@@ -1,0 +1,17 @@
+[default]
+DEBUG = false
+FLASK_ADMIN_SWATCH = 'cerulean'
+EXTENSIONS = [
+    
+]
+UPLOAD_FOLDER = "uploads"
+
+[development]
+DEBUG = true
+SQLALCHEMY_DATABASE_URI = 'sqlite:///database.db'
+SQLALCHEMY_TRACK_MODIFICATIONS = false
+EXTENSIONS = [
+    
+]
+
+[production]

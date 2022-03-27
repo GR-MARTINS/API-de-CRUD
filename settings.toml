@@ -11,7 +11,10 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:///database.db'
 SQLALCHEMY_TRACK_MODIFICATIONS = false
 EXTENSIONS = [
     "api.db:init_app",
-    "api.model.migrate:init_app"
+    "api.model.migrate:init_app",
+    "api.schema:init_app",
+    "api.schema:init_app",
+    "api.route:init_app",
 ]
 
 [production]

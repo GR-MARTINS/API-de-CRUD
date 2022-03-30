@@ -11,5 +11,13 @@ class BookPydantic(BaseModel):
     escritor: str
 
 
+class ListBooksPydantic(BaseModel):
+    count: int
+    books: list[BookPydantic]
+
+
 class ListIdBooksPydantic(BaseModel):
+    """
+    Lista de id's a serem excluídos
+    """
     list: list[int]

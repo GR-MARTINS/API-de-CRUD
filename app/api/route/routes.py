@@ -1,8 +1,9 @@
 from flask import Blueprint, current_app, request, jsonify
-from api.model import Book
-from api.schema.bookschema import BookSchema
-from api.doc import spec, model
+from app.api.model import Book
+from app.api.schema.bookschema import BookSchema
+from app.api.doc import spec, model
 from flask_pydantic_spec import Response, Request
+from marshmallow import ValidationError
 
 
 bp = Blueprint('books', __name__)
@@ -18,7 +19,11 @@ def create():
     Realiza a inserção de um livro no banco de dados.
     """
     bs = BookSchema()
-    book = bs.load(request.json)
+    try:
+        book = bs.load(request.json)
+    except ValidationError:
+        return {'message': 'id must not be sent'}, 400
+    # import ipdb; ipdb.set_trace()
     current_app.db.session.add(book)
     current_app.db.session.commit()
     return bs.jsonify(book), 201

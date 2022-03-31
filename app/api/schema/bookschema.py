@@ -1,6 +1,6 @@
 from marshmallow import fields, validates, ValidationError
 from app.api.schema import ma
-from app.api.model import Book
+from app.api.model import Book, User
 
 
 class BookSchema(ma.SQLAlchemyAutoSchema):
@@ -13,3 +13,11 @@ class BookSchema(ma.SQLAlchemyAutoSchema):
     @validates('id')
     def validate_id(self, value):
         raise ValidationError('id must not be sent')
+
+class UserSchema(ma.SQLAlchemyAutoSchema):
+    class Meta:
+        model = User
+        load_instance = True
+    username = fields.String(required=True)
+    password = fields.String(required=True)
+

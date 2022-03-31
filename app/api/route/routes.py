@@ -57,22 +57,26 @@ def read_book(identificator):
 @bp.put('/atualizar/<identificator>')
 @spec.validate(
     body=Request(model.BookPydantic),
-    resp=Response(HTTP_200=model.BookPydantic)
+    resp=Response(HTTP_201=model.BookPydantic)
 )
 def update(identificator):
     """
     Busca um livro filtrando pelo id e realiza modificações.
     """
     bs = BookSchema()
-    query = Book.query.filter(Book.id == identificator)
+
+    try:
+        query = Book.query.filter(Book.id == identificator)
+    except IndexError:
+        return {'message': 'Book not found'}, 404
+
     query.update(request.json)
     current_app.db.session.commit()
-    return bs.jsonify(query.first())
+    return bs.jsonify(query.first()), 201
 
 
 @bp.delete('/deletar/<identificator>')
 @spec.validate(
-    body=Request(model.BookPydantic),
     resp=Response('HTTP_204')
 )
 def delete_book(identificator):

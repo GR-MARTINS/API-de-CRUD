@@ -91,3 +91,54 @@ class TesteLer(TestFlaskBase):
         esperado = {'message': 'Book not found'}
         response = self.client.get(url_for('books.read_book', identificator=1))
         self.assertEqual(esperado, response.json)
+
+
+class TesteAtualizar(TestFlaskBase):
+    def teste_se_o_identificador_nao_for_encontrado_retorne_um_erro(self):
+        esperado = {'message': 'response validation error'}
+        json = {'escritor': 'glayton', 'livro': 'python3'}
+        response = self.client.put(url_for('books.update', identificator=1), json=json)
+        self.assertEqual(esperado, response.json)
+
+    def teste_se_o_identificador_for_encontrado_retorne_livro_atualizado(self):
+        esperado = json = {'escritor': 'glayton', 'livro': 'python3', 'id': 1}
+
+        dado = {
+            'livro': 'python2',
+            'escritor': 'Glayton'
+        }
+
+        response = self.client.post(url_for('books.create'), json=dado)
+
+        json = {'escritor': 'glayton', 'livro': 'python3'}
+
+        response = self.client.put(url_for('books.update', identificator=1), json=json)
+        self.assertEqual(esperado, response.json)
+
+
+class TesteDeletar(TestFlaskBase):
+    def teste_deletar_deve_retornar_deletado_se_nao_encontrar_registro(self):
+        response = self.client.delete(url_for('books.delete_book', identificator=1))
+        self.assertEqual('deletado', response.json)
+
+    def teste_deletar_deve_retornar_deletado_se_encontrar_registro(self):
+        dado = {
+            'livro': 'python2',
+            'escritor': 'Glayton'
+        }
+
+        response = self.client.post(url_for('books.create'), json=dado)
+        response = self.client.delete(url_for('books.delete_book', identificator=1))
+        self.assertEqual('deletado', response.json)
+
+    def teste_deletar_deve_retornar_deletado_se_encontrar_todos_os_registros(self):
+        dado = {
+            'livro': 'python2',
+            'escritor': 'Glayton'
+        }
+
+        lista = {'list': [1]}
+
+        response = self.client.post(url_for('books.create'), json=dado)
+        response = self.client.delete(url_for('books.delete_books'), json=lista)
+        self.assertEqual('deletado', response.json)

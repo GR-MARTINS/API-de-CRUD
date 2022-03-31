@@ -65,10 +65,11 @@ def update(identificator):
     """
     bs = BookSchema()
 
+    query = Book.query.filter(Book.id == identificator)
     try:
-        query = Book.query.filter(Book.id == identificator)
+        lista = query[0]
     except IndexError:
-        return {'message': 'Book not found'}, 404
+        return {"message": "response validation error"}, 404
 
     query.update(request.json)
     current_app.db.session.commit()

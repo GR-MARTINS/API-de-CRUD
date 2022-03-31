@@ -14,7 +14,7 @@ EXTENSIONS = [
     "app.api.model.migrate:init_app",
     "app.api.schema:init_app",
     "app.api.route:init_app",
-    "app.api.doc:init_app"
+    "app.api.doc:init_app",
 ]
 
 [production]

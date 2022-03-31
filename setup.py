@@ -6,7 +6,7 @@ def read(filename):
 
 
 setup(
-    name="bookapi",
+    name="app",
     version="0.1.0",
     description="api rest",
     packages=find_packages(),

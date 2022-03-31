@@ -21,6 +21,8 @@ class TestFlaskBase(TestCase):
         """
         self.app.db.drop_all()
 
+
+class TesteCriar(TestFlaskBase):
     def test_criar_deve_retornar_o_payload_enviado_sem_id(self):
         dado = {
             'livro': 'python3',
@@ -64,4 +66,28 @@ class TestFlaskBase(TestCase):
 
         # import ipdb; ipdb.set_trace()
 
+        self.assertEqual(esperado, response.json)
+
+
+class TesteLer(TestFlaskBase):
+    def teste_ler_deve_retornar_uma_query_vazia(self):
+        esperado = []
+        response = self.client.get(url_for('books.read_all_books'))
+        self.assertEqual(esperado, response.json)
+
+    def teste_ler_deve_retornar_uma_query_com_elemento_inserido(self):
+        livro = {'escritor': 'glayton', 'livro': 'python3'}
+        self.client.post(url_for('books.create'), json=livro)
+        response = self.client.get(url_for('books.read_all_books'))
+        self.assertEqual(1, len(response.json))
+
+    def teste_ler_deve_retornar_uma_query_com_elemento_solicitado_pelo_id(self):
+        livro = {'escritor': 'glayton', 'livro': 'python3'}
+        self.client.post(url_for('books.create'), json=livro)
+        response = self.client.get(url_for('books.read_book', identificator=1))
+        self.assertEqual(3, len(response.json))
+
+    def teste_ler_deve_retornar_um_erro_se_o_id_solicitado_nao_existir(self):
+        esperado = {'message': 'Book not found'}
+        response = self.client.get(url_for('books.read_book', identificator=1))
         self.assertEqual(esperado, response.json)

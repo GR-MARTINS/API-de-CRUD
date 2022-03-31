@@ -6,7 +6,7 @@ c = count()
 
 
 class BookPydantic(BaseModel):
-    id: Optional[int] = Field(defaul_factory=lambda: next(c))
+    #id: Optional[int] = Field(defaul_factory=lambda: next(c))
     livro: str
     escritor: str
 

@@ -1,4 +1,4 @@
-from .routes import bp
+from app.api.route.routes import bp
 
 
 def init_app(app):

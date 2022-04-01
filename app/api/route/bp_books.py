@@ -1,9 +1,10 @@
 from flask import Blueprint, current_app, request, jsonify
 from app.api.model import Book
-from app.api.schema.bookschema import BookSchema
+from app.api.schema.schemas import BookSchema
 from app.api.doc import spec, model
 from flask_pydantic_spec import Response, Request
 from marshmallow import ValidationError
+from flask_jwt_extended import jwt_required
 
 
 bp = Blueprint('books', __name__)

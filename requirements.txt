@@ -7,3 +7,4 @@ marshmallow-sqlalchemy
 flask-pydantic-spec
 coverage
 passlib
+flask_jwt_extended

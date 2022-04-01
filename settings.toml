@@ -15,6 +15,7 @@ EXTENSIONS = [
     "app.api.schema:init_app",
     "app.api.route:init_app",
     "app.api.doc:init_app",
+    "app.api.auth:init_app",
 ]
 
 [production]

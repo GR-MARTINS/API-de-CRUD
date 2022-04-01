@@ -14,10 +14,10 @@ class BookSchema(ma.SQLAlchemyAutoSchema):
     def validate_id(self, value):
         raise ValidationError('id must not be sent')
 
+
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = User
         load_instance = True
     username = fields.String(required=True)
     password = fields.String(required=True)
-

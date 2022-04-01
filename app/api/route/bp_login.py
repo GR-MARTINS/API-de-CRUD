@@ -19,11 +19,11 @@ def login():
             expires_delta=timedelta(seconds=1)
         )
         refresh_token = create_refresh_token(identity=user.id)
-        return us.jsonify({
+        return {
             'access_token': access_token,
             'refresh_token': refresh_token,
             'message': 'sucess'
-        }), 200
+        }, 200
     return us.jsonify({
         'message': 'Deu ruim! credenciais inválidas'
     }), 401

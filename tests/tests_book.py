@@ -51,14 +51,24 @@ class TesteCriar(TestFlaskBase):
 
 class TesteLer(TestFlaskBase):
     def teste_ler_deve_retornar_uma_query_vazia(self):
-        esperado = []
-        response = self.client.get(url_for('books.read_all_books'))
-        self.assertEqual(esperado, response.json)
+        self.create_user()
+        token = self.create_token()
+        from time import sleep
+        #sleep(2)
+        response = self.client.get(
+            url_for('books.read_all_books'),
+            headers=token
+        )
+
+        self.assertEqual([], response.json)
 
     def teste_ler_deve_retornar_uma_query_com_elemento_inserido(self):
+        self.create_user()
+        token = self.create_token()
+
         livro = {'escritor': 'glayton', 'livro': 'python3'}
         self.client.post(url_for('books.create'), json=livro)
-        response = self.client.get(url_for('books.read_all_books'))
+        response = self.client.get(url_for('books.read_all_books'), headers=token)
         self.assertEqual(1, len(response.json))
 
     def teste_ler_deve_retornar_uma_query_com_elemento_solicitado_pelo_id(self):

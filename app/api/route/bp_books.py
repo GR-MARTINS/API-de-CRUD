@@ -31,6 +31,7 @@ def create():
 
 
 @bp.get('/ler/')
+@jwt_required()
 def read_all_books():
     """
     Busca todos os livros cadastrados no banco de dados.

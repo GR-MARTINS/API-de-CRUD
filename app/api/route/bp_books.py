@@ -56,7 +56,7 @@ def read_book(identificator):
     return bs.jsonify(result), 200
 
 
-@bp.put('/api/livros/atualizar_livro/<identificator>')
+@bp.put('/api/livros/modificar_livro/<identificator>')
 @spec.validate(
     body=Request(model.BookPydantic),
     resp=Response(HTTP_201=model.BookPydantic)
@@ -78,7 +78,7 @@ def update(identificator):
     return bs.jsonify(query.first()), 201
 
 
-@bp.delete('/api/livros/deletar_livro/<identificator>')
+@bp.delete('/api/livros/excluir_livro/<identificator>')
 @spec.validate(
     resp=Response('HTTP_204')
 )
@@ -91,7 +91,7 @@ def delete_book(identificator):
     return jsonify('deletado')
 
 
-@bp.delete('/api/livros/deletar_livros')
+@bp.delete('/api/livros/excluir_livros')
 @spec.validate(
     body=Request(model.ListIdBooksPydantic),
     resp=Response('HTTP_204')

@@ -8,7 +8,7 @@ from app.api.model import User
 bp = Blueprint('login', __name__)
 
 
-@bp.post('/login')
+@bp.post('/api/login')
 def login():
     us = UserSchema()
     user = us.load(request.json)

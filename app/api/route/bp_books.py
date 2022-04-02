@@ -10,7 +10,7 @@ from flask_jwt_extended import jwt_required
 bp = Blueprint('books', __name__)
 
 
-@bp.post('/criar')
+@bp.post('/api/livros/criar_livro')
 @spec.validate(
     body=model.BookPydantic,
     resp=Response(HTTP_201=model.BookPydantic)
@@ -30,7 +30,7 @@ def create():
     return bs.jsonify(book), 201
 
 
-@bp.get('/ler/')
+@bp.get('/api/livros/buscar_livros')
 @jwt_required()
 def read_all_books():
     """
@@ -41,7 +41,7 @@ def read_all_books():
     return bs.jsonify(result), 200
 
 
-@bp.get('/ler/<identificator>')
+@bp.get('/api/livros/buscar_livro_/<identificator>')
 def read_book(identificator):
     """
     Busca um livro cadastrado no banco de dados filtrando pelo id.
@@ -56,7 +56,7 @@ def read_book(identificator):
     return bs.jsonify(result), 200
 
 
-@bp.put('/atualizar/<identificator>')
+@bp.put('/api/livros/atualizar_livro/<identificator>')
 @spec.validate(
     body=Request(model.BookPydantic),
     resp=Response(HTTP_201=model.BookPydantic)
@@ -78,7 +78,7 @@ def update(identificator):
     return bs.jsonify(query.first()), 201
 
 
-@bp.delete('/deletar/<identificator>')
+@bp.delete('/api/livros/deletar_livro/<identificator>')
 @spec.validate(
     resp=Response('HTTP_204')
 )
@@ -91,7 +91,7 @@ def delete_book(identificator):
     return jsonify('deletado')
 
 
-@bp.delete('/deletar')
+@bp.delete('/api/livros/deletar_livros')
 @spec.validate(
     body=Request(model.ListIdBooksPydantic),
     resp=Response('HTTP_204')

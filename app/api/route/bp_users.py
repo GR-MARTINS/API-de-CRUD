@@ -5,7 +5,7 @@ from app.api.schema.schemas import UserSchema
 bp = Blueprint('users', __name__)
 
 
-@bp.post('/create-user')
+@bp.post('/api/users/create_user')
 def register():
     us = UserSchema()
     

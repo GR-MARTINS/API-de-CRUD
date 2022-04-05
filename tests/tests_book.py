@@ -9,7 +9,7 @@ class TesteCriar(TestFlaskBase):
             'escritor': 'Glayton'
         }
 
-        response = self.client.post(url_for('books.create'), json=dado)
+        response = self.client.post(url_for('books.create_book'), json=dado)
 
         # import ipdb; ipdb.set_trace()
 
@@ -26,7 +26,7 @@ class TesteCriar(TestFlaskBase):
         }
 
         esperado = [{'loc': ['escritor'], 'msg': 'field required', 'type': 'value_error.missing'}]
-        response = self.client.post(url_for('books.create'), json=dado)
+        response = self.client.post(url_for('books.create_book'), json=dado)
 
         # import ipdb; ipdb.set_trace()
 
@@ -42,7 +42,7 @@ class TesteCriar(TestFlaskBase):
         }
 
         esperado = {'message': 'id must not be sent'}
-        response = self.client.post(url_for('books.create'), json=dado)
+        response = self.client.post(url_for('books.create_book'), json=dado)
 
         # import ipdb; ipdb.set_trace()
 
@@ -67,13 +67,13 @@ class TesteLer(TestFlaskBase):
         token = self.create_token()
 
         livro = {'escritor': 'glayton', 'livro': 'python3'}
-        self.client.post(url_for('books.create'), json=livro)
+        self.client.post(url_for('books.create_book'), json=livro)
         response = self.client.get(url_for('books.read_all_books'), headers=token)
         self.assertEqual(1, len(response.json))
 
     def teste_ler_deve_retornar_uma_query_com_elemento_solicitado_pelo_id(self):
         livro = {'escritor': 'glayton', 'livro': 'python3'}
-        self.client.post(url_for('books.create'), json=livro)
+        self.client.post(url_for('books.create_book'), json=livro)
         response = self.client.get(url_for('books.read_book', identificator=1))
         self.assertEqual(3, len(response.json))
 
@@ -98,7 +98,7 @@ class TesteAtualizar(TestFlaskBase):
             'escritor': 'Glayton'
         }
 
-        response = self.client.post(url_for('books.create'), json=dado)
+        response = self.client.post(url_for('books.create_book'), json=dado)
 
         json = {'escritor': 'glayton', 'livro': 'python3'}
 
@@ -117,7 +117,7 @@ class TesteDeletar(TestFlaskBase):
             'escritor': 'Glayton'
         }
 
-        response = self.client.post(url_for('books.create'), json=dado)
+        response = self.client.post(url_for('books.create_book'), json=dado)
         response = self.client.delete(url_for('books.delete_book', identificator=1))
         self.assertEqual('deletado', response.json)
 
@@ -129,6 +129,6 @@ class TesteDeletar(TestFlaskBase):
 
         lista = {'list': [1]}
 
-        response = self.client.post(url_for('books.create'), json=dado)
+        response = self.client.post(url_for('books.create_book'), json=dado)
         response = self.client.delete(url_for('books.delete_books'), json=lista)
         self.assertEqual('deletado', response.json)

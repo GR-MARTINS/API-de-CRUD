@@ -3,12 +3,18 @@ from flask import Blueprint, request
 from flask_jwt_extended import create_access_token, create_refresh_token
 from app.api.schema.schemas import UserSchema
 from app.api.model import User
+from app.api.doc import spec, model
+from flask_pydantic_spec import Response, Request
 
 
 bp = Blueprint('login', __name__)
 
 
-@bp.post('/api/login')
+@bp.post('/api/v1/login')
+@spec.validate(
+    body=model.User,
+    resp=Response(HTTP_201=model.User)
+)
 def login():
     us = UserSchema()
     user = us.load(request.json)
@@ -16,7 +22,7 @@ def login():
     if user and user.verify_password(request.json['password']):
         access_token = create_access_token(
             identity=user.id,
-            expires_delta=timedelta(seconds=1)
+            expires_delta=timedelta(seconds=60)
         )
         refresh_token = create_refresh_token(identity=user.id)
         return {

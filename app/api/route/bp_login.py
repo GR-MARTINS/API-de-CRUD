@@ -22,7 +22,7 @@ def login():
     if user and user.verify_password(request.json['password']):
         access_token = create_access_token(
             identity=user.id,
-            expires_delta=timedelta(seconds=60)
+            expires_delta=timedelta(seconds=600)
         )
         refresh_token = create_refresh_token(identity=user.id)
         return {

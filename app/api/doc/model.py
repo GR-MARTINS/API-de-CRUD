@@ -32,3 +32,7 @@ class Login(BaseModel):
     #id: Optional[int] = Field(defaul_factory=lambda: next(c))
     username: str
     password: str
+
+class Token(BaseModel):
+    #id: Optional[int] = Field(defaul_factory=lambda: next(c))
+    Authorization: str

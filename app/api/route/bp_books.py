@@ -15,6 +15,7 @@ bp = Blueprint('books', __name__)
     body=model.Book,
     resp=Response(HTTP_201=model.Book)
 )
+@jwt_required()
 def create_book():
     """
     Realiza a inserção de um livro no banco de dados.
@@ -31,6 +32,10 @@ def create_book():
 
 
 @bp.get('/api/v1/livros')
+@spec.validate(
+    headers=model.Token,
+    resp=Response(HTTP_201=model.ListBooks)
+)
 @jwt_required()
 def read_all_books():
     """
@@ -42,6 +47,10 @@ def read_all_books():
 
 
 @bp.get('/api/v1/livros/<identificator>')
+@spec.validate(
+    headers=model.Token,
+    resp=Response(HTTP_200=model.Book)
+)
 def read_book(identificator):
     """
     Busca um livro cadastrado no banco de dados filtrando pelo id.

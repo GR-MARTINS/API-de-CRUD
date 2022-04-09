@@ -30,6 +30,6 @@ def login():
             'refresh_token': refresh_token,
             'message': 'sucess'
         }, 200
-    return us.jsonify({
+    return {
         'message': 'Deu ruim! credenciais inválidas'
-    }), 401
+    }, 401

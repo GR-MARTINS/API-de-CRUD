@@ -7,6 +7,17 @@ class TestLogin(TestFlaskBase):
         self.create_user()
         login = self.client.post(url_for('login.login'), json=self.user)
 
-        esperado=['access_token', 'message', 'refresh_token']
+        esperado = ['access_token', 'message', 'refresh_token']
 
-        self.assertEqual(esperado,list(login.json.keys()))
+        self.assertEqual(esperado, list(login.json.keys()))
+
+    def teste_login_deve_retornar_um_erro(self):
+        user = {
+            'password': '1234',
+            'username': 'a'
+        }
+        login = self.client.post(url_for('login.login'), json=user)
+
+        esperado = {'message': 'Deu ruim! credenciais inválidas'}
+
+        self.assertEqual(esperado, login.json)

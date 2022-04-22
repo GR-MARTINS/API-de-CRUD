@@ -79,7 +79,7 @@ def update(identificator):
 
     query = Book.query.filter(Book.id == identificator)
     try:
-        lista = query[0]
+        query.first()
     except IndexError:
         return {"message": "response validation error"}, 404
 

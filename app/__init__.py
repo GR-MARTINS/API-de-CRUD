@@ -1,8 +1,8 @@
 from flask import Flask
-from app.api import config
+from app.ext import dynaconf
 
 
 def create_app():
     app = Flask(__name__)
-    config.init_app(app)
+    dynaconf.init_app(app)
     return app

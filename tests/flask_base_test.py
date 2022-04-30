@@ -1,6 +1,6 @@
 from json import loads
 from unittest import TestCase
-from app.app import create_app
+from app import create_app
 from flask import url_for
 
 
